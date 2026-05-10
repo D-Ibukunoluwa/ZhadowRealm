@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--to run preview: python3 -m http.server 8000-->
-<!--to push in this order; 1. git add . 2. git commit -m "initial portfolio build" 3. -->
+<!--to push in this order; 1. git add . 2. git commit -m "initial portfolio build" 3. git push -->
 <html lang="en">
   <head>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
@@ -64,15 +64,11 @@
       <div class="work-grid">
 
           <!-- PROJECT 1 — FEATURED (BIG) -->
-          <div class="work-item featured">
-            <div class="work-image">
-               <img src="assets/images/apex.png" alt="APEX Brand Identity" class="work-img" />
-            </div>
-            <div class="work-item featured">
+<div class="work-item featured">
   <div class="work-image deck-container">
     <div class="deck">
-      <img src="assets/images/Apex-bw.png" alt="APEX" class="deck-card" />
       <img src="assets/images/Apex-default.png" alt="APEX" class="deck-card" />
+      <img src="assets/images/Apex-bw.png" alt="APEX" class="deck-card" />
       <img src="assets/images/Apex-watermark.png" alt="APEX" class="deck-card" />
     </div>
   </div>
@@ -90,9 +86,17 @@
 
           <!-- PROJECT 2 — TALL -->
           <div class="work-item tall">
-            <div class="work-image">
-              <img src="assets/images/Posters.png" alt="Lagoon Nights Poster Series" class="work-img" />
-            </div>
+  <div class="work-image deck-container">
+    <div class="deck">
+      <img src="assets/images/Posters.png" alt="APEX" class="deck-card" />
+      <img src="assets/images/lagoon-night-genesis.png" alt="APEX" class="deck-card" />
+      <img src="assets/images/lagoon-night-pulse.png" alt="APEX" class="deck-card" />
+    </div>
+  </div>
+  <div class="work-info">
+    <!-- rest of card stays the same -->
+  </div>
+</div>
             <div class="work-info">
               <span class="work-category">Poster Design</span>
               <h3>Lagoon Nights</h3>
@@ -103,9 +107,17 @@
 
           <!-- PROJECT 3 — WIDE -->
           <div class="work-item wide">
-            <div class="work-image">
-              <img src="assets/images/launch-announcement.png" alt="APEX Social Campaign" class="work-img" />
-            </div>
+             <div class="work-image deck-container">
+    <div class="deck">
+      <img src="assets/images/launch-announcement.png" alt="APEX" class="deck-card" />
+      <img src="assets/images/LIFESTYLE.png" alt="APEX" class="deck-card" />
+      <img src="assets/images/TEASER.png" alt="APEX" class="deck-card" />
+    </div>
+  </div>
+  <div class="work-info">
+    <!-- rest of card stays the same -->
+  </div>
+</div>
             <div class="work-info">
               <span class="work-category">Social Media</span>
               <h3>APEX Social Campaign</h3>
@@ -142,9 +154,17 @@
 
           <!-- PROJECT 6 — IN PROGRESS -->
           <div class="work-item">
-            <div class="work-image">
-              <img src="assets/images/novabite-conceptB.png" alt="NovaBite" class="work-img" />
-            </div>
+             <div class="work-image deck-container">
+    <div class="deck">
+      <img src="assets/images/novabite-conceptB.png" alt="APEX" class="deck-card" />
+      <img src="assets/images/NovaBite Concept A.png" alt="APEX" class="deck-card" />
+      <img src="assets/images/NovaBite Concept C.png" alt="APEX" class="deck-card" />
+    </div>
+  </div>
+  <div class="work-info">
+    <!-- rest of card stays the same -->
+  </div>
+</div>
             <div class="work-info">
               <span class="work-category">Brand Identity</span>
               <h3>NovaEats</h3>
@@ -550,6 +570,50 @@ document.querySelectorAll('.deck-container').forEach(container => {
       'perspective(800px) rotateX(0deg) rotateY(0deg)';
   });
 });
+
+
+// ================================
+      // DECK HOVER — 3D TILT ON CARDS
+      // ================================
+
+      document.querySelectorAll('.deck-container').forEach(container => {
+        
+        container.addEventListener('mouseenter', () => {
+          // Stagger the fan animation per card
+          const cards = container.querySelectorAll('.deck-card');
+          cards.forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.06}s`;
+          });
+        });
+
+        container.addEventListener('mouseleave', () => {
+          // Remove stagger on leave so they collapse together
+          const cards = container.querySelectorAll('.deck-card');
+          cards.forEach(card => {
+            card.style.transitionDelay = '0s';
+          });
+        });
+
+        // Subtle tilt follow on mouse move
+        container.addEventListener('mousemove', (e) => {
+          const rect = container.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const mouseX = e.clientX - centerX;
+          const mouseY = e.clientY - centerY;
+          const tiltX = (mouseY / rect.height) * 6;
+          const tiltY = (mouseX / rect.width) * -6;
+
+          container.querySelector('.deck').style.transform = 
+            `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+        });
+
+        container.addEventListener('mouseleave', () => {
+          container.querySelector('.deck').style.transform = 
+            'perspective(800px) rotateX(0deg) rotateY(0deg)';
+        });
+
+      });
     </script>
   </body>
 </html>
